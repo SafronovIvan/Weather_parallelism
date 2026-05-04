@@ -11,7 +11,7 @@ from constant import weather_codes_ru, geo_url, weather_url
 #print("Ключ успешно загружен:",  API_KEY)
 
 
-async def get_cities(cities:List[str]) -> List[dict]:
+async def get_weather_by_cities(cities:List[str]) -> List[dict]:
     connector = aiohttp.TCPConnector(ssl=False)
     async with aiohttp.ClientSession(connector=connector) as session:
         geo_tasks = []
@@ -66,5 +66,5 @@ async def get_cities(cities:List[str]) -> List[dict]:
         return final
                 
 if __name__ == "__main__":
-    for i in asyncio.run(get_cities(["Saint Petersburg", "London"])):
+    for i in asyncio.run(get_weather_by_cities(["Saint Petersburg", "London"])):
         print(i, "\n")
