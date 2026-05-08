@@ -2,13 +2,21 @@ import os
 from dotenv import load_dotenv
 import aiohttp
 import asyncio
+import json
 from typing import List
 from constant import weather_codes_ru, geo_url, weather_url
 
 # Загружаем переменные из .env в окружение - Не нужно для текущего набора сайтов
-#load_dotenv()
-#API_KEY = os.getenv("WEATHER_API_KEY") 
-#print("Ключ успешно загружен:",  API_KEY)
+# load_dotenv()
+# API_KEY = os.getenv("WEATHER_API_KEY") 
+# print("Ключ успешно загружен:",  API_KEY)
+
+
+
+def save_to_json(weather_data, filename="weather_data.json"):
+    with open(filename, 'w+', encoding='utf-8') as f:
+        json.dump(weather_data, f, ensure_ascii=False, indent=2)
+    print(f"Сохранено в {filename}")
 
 
 async def get_weather_by_cities(cities:List[str]) -> List[dict]:
@@ -66,5 +74,4 @@ async def get_weather_by_cities(cities:List[str]) -> List[dict]:
         return final
                 
 if __name__ == "__main__":
-    for i in asyncio.run(get_weather_by_cities(["Saint Petersburg", "London"])):
-        print(i, "\n")
+    save_to_json(asyncio.run(get_weather_by_cities(["Saint Petersburg", "London"])))
